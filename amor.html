@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Tags para transformar em Web App -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#591122">
+    
+    <title>Nosso Amor</title>
+    
+    <style>
+        :root {
+            --bg-color: #591122; /* Vinho escuro */
+            --card-bg: #fdf5e6; /* Creme/Champanhe */
+            --text-dark: #333;
+            --accent: #d4af37; /* Dourado */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at top right, #7a172e, #591122);
+        }
+
+        .header {
+            padding: 2rem 1rem 1rem;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            font-family: 'Georgia', serif;
+            color: #fdf5e6;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #e8d0c3;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Seção das Fotos */
+        .photo-gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 8px 8px 25px 8px;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            width: 140px;
+            position: relative;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .polaroid span {
+            color: var(--text-dark);
+            font-size: 0.75rem;
+            font-weight: bold;
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .polaroid.left { transform: rotate(-6deg); z-index: 2; }
+        .polaroid.right { transform: rotate(5deg) translateY(15px); z-index: 1; }
+
+        .heart-connector {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff4d6d;
+            z-index: 3;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Cartões de Informação */
+        .card-container {
+            background: var(--card-bg);
+            border-radius: 30px 30px 0 0;
+            padding: 2rem 1.5rem;
+            color: var(--text-dark);
+            min-height: 50vh;
+            margin-top: 2rem;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.2);
+            padding-bottom: 80px; /* Espaço para o botão flutuante */
+        }
+
+        .dates-grid {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .date-box {
+            flex: 1;
+            background: white;
+            padding: 1rem 0.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .date-box h3 {
+            font-size: 0.7rem;
+            color: var(--bg-color);
+            text-transform: uppercase;
+            margin: 0 0 10px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .date-box .icon { font-size: 1.8rem; margin-bottom: 5px; }
+        
+        .date-box p {
+            margin: 0;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .message-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 2px dashed #e8d0c3;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .message-box h2 {
+            color: var(--bg-color);
+            margin-top: 0;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .message-box p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .btn-action {
+            background: linear-gradient(135deg, #ff4d6d, #d90429);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            width: 100%;
+            box-shadow: 0 8px 15px rgba(217, 4, 41, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-action:active {
+            transform: scale(0.95);
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--bg-color);
+            text-align: center;
+        }
+
+        /* Botão Flutuante de Música */
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .music-btn:active {
+            transform: scale(0.9);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Arquivo de áudio oculto -->
+    <audio id="bgMusic" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="header">
+        <h1>PARABÉNS, AMOR! 🥂<br>20 ANOS DE LUZ</h1>
+        <p>Para Você, Minha Querida Larissa de Oliveira Santos ✨</p>
+    </div>
+
+    <div class="photo-gallery">
+        <div class="polaroid left">
+            <img src="WhatsApp Image 2026-09-06 at 11.30.07.jpeg" alt="Larissa">
+            <span>A estrela que me guia ✨</span>
+        </div>
+        <div class="heart-connector">❤️</div>
+        <div class="polaroid right">
+            <img src="WhatsApp Image 2026-09-06 at 11.29.16.jpeg" alt="João Vithor">
+            <span>Seu eterno namorado 🤍</span>
+        </div>
+    </div>
+
+    <div class="card-container">
+        
+        <div class="dates-grid">
+            <div class="date-box">
+                <h3>Aniversário - 22 Set</h3>
+                <div class="icon">👑</div>
+                <p id="countdown">Calculando...</p>
+            </div>
+            <div class="date-box">
+                <h3>O Dia que Começou</h3>
+                <div class="icon">🧭</div>
+                <p>2 de Setembro. A data que mudou tudo.</p>
+            </div>
+        </div>
+
+        <div class="message-box">
+            <h2>Declaração Especial 💌</h2>
+            <p>Você é incrivelmente especial para mim. Mesmo com os desafios da distância, eu sei que a nossa conexão é única. Cada dia longe é apenas um dia a mais próximo de estarmos juntos.</p>
+            <p>Eu prometo sempre apoiar você, nas vitórias e nos dias difíceis. Que esses 20 anos sejam cheios de luz, pois eu farei de tudo para te ver sorrir.</p>
+        </div>
+
+        <button class="btn-action" onclick="enviarBeijo()">💌 Enviar Beijo Virtual</button>
+
+        <div class="footer">
+            Com todo o meu amor, João Vithor.
+        </div>
+    </div>
+
+    <!-- Botão flutuante para controlar a música -->
+    <button class="music-btn" id="musicToggle" onclick="toggleMusic()">
+        🎵 Tocar Música
+    </button>
+
+    <script>
+        // Lógica da Música
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicToggle');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.innerHTML = '🎵 Tocar Música';
+            } else {
+                music.play();
+                musicBtn.innerHTML = '⏸️ Pausar Música';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Lógica de Contagem Regressiva para o aniversário (22 de Setembro)
+        function atualizarContagem() {
+            const hoje = new Date();
+            const anoAtual = hoje.getFullYear();
+            let dataAniversario = new Date(anoAtual, 8, 22); 
+
+            if (hoje > dataAniversario && hoje.getDate() !== 22) {
+                dataAniversario = new Date(anoAtual + 1, 8, 22);
+            }
+
+            const diffTempo = dataAniversario - hoje;
+            const diffDias = Math.ceil(diffTempo / (1000 * 60 * 60 * 24));
+
+            const contadorEl = document.getElementById('countdown');
+            if (diffDias === 0) {
+                contadorEl.innerHTML = "É HOJE! 🎉";
+                contadorEl.style.color = "#d90429";
+            } else {
+                contadorEl.innerHTML = `Faltam ${diffDias} dias!`;
+            }
+        }
+
+        atualizarContagem();
+
+        // Animação do botão de beijo
+        function enviarBeijo() {
+            alert("💖 Um beijo gigante, cheio de saudade e amor, foi enviado direto de Anápolis para você! Te amo!");
+            
+            // Opcional: Se a música não estiver tocando quando ela clicar no beijo, começa a tocar
+            if (!isPlaying) {
+                toggleMusic();
+            }
+        }
+    </script>
+</body>
+</html>
