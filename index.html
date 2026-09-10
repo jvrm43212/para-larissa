@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- Tags para transformar em Web App -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,6 +16,8 @@
             --card-bg: #fdf5e6; /* Creme/Champanhe */
             --text-dark: #333;
             --accent: #d4af37; /* Dourado */
+            --hk-pink: #ffb6c1; /* Rosa Hello Kitty */
+            --hk-red: #ff0000; /* Vermelho do Laço */
         }
 
         body {
@@ -49,7 +50,6 @@
             font-style: italic;
         }
 
-        /* Seção das Fotos */
         .photo-gallery {
             display: flex;
             justify-content: center;
@@ -103,7 +103,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Cartões de Informação */
         .card-container {
             background: var(--card-bg);
             border-radius: 30px 30px 0 0;
@@ -112,7 +111,7 @@
             min-height: 50vh;
             margin-top: 2rem;
             box-shadow: 0 -5px 25px rgba(0,0,0,0.2);
-            padding-bottom: 80px; /* Espaço para o botão flutuante */
+            padding-bottom: 90px;
         }
 
         .dates-grid {
@@ -146,26 +145,76 @@
             font-weight: bold;
         }
 
-        .message-box {
-            background: white;
-            padding: 1.5rem;
+        /* --- SEÇÃO HELLO KITTY --- */
+        .hk-section {
+            background-color: #fff;
+            border: 3px solid var(--hk-pink);
             border-radius: 20px;
-            border: 2px dashed #e8d0c3;
+            padding: 1.5rem;
             margin-bottom: 2rem;
-            text-align: left;
+            box-shadow: 0 8px 15px rgba(255, 182, 193, 0.4);
+            position: relative;
         }
 
-        .message-box h2 {
-            color: var(--bg-color);
+        .hk-bow {
+            position: absolute;
+            top: -15px;
+            right: -10px;
+            font-size: 2.5rem;
+            transform: rotate(15deg);
+            filter: drop-shadow(2px 4px 2px rgba(0,0,0,0.2));
+            animation: floatBow 3s ease-in-out infinite;
+        }
+
+        @keyframes floatBow {
+            0%, 100% { transform: rotate(15deg) translateY(0); }
+            50% { transform: rotate(15deg) translateY(-5px); }
+        }
+
+        .hk-section h2 {
+            color: #ff5277;
             margin-top: 0;
-            font-size: 1.2rem;
-            text-align: center;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .message-box p {
+        .hk-letter-content {
+            display: none; /* Escondido até ela clicar */
+            text-align: left;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px dashed var(--hk-pink);
             font-size: 0.95rem;
             line-height: 1.6;
             color: #555;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-hk {
+            background-color: var(--hk-pink);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 182, 193, 0.6);
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-hk:hover, .btn-hk:active {
+            background-color: #ff9fb0;
+            transform: scale(0.98);
         }
 
         .btn-action {
@@ -194,7 +243,6 @@
             text-align: center;
         }
 
-        /* Botão Flutuante de Música */
         .music-btn {
             position: fixed;
             bottom: 20px;
@@ -223,7 +271,6 @@
 </head>
 <body>
 
-    <!-- Arquivo de áudio oculto -->
     <audio id="bgMusic" loop>
         <source src="musica.mp3" type="audio/mpeg">
     </audio>
@@ -260,10 +307,27 @@
             </div>
         </div>
 
-        <div class="message-box">
-            <h2>Declaração Especial 💌</h2>
-            <p>Você é incrivelmente especial para mim. Mesmo com os desafios da distância, eu sei que a nossa conexão é única. Cada dia longe é apenas um dia a mais próximo de estarmos juntos.</p>
-            <p>Eu prometo sempre apoiar você, nas vitórias e nos dias difíceis. Que esses 20 anos sejam cheios de luz, pois eu farei de tudo para te ver sorrir.</p>
+        <!-- SEÇÃO DA CARTA DA HELLO KITTY -->
+        <div class="hk-section">
+            <div class="hk-bow">🎀</div>
+            <h2>🐱 Para a minha Hello Kitty</h2>
+            
+            <button class="btn-hk" id="openLetterBtn" onclick="toggleLetter()">💌 Abrir Carta Especial</button>
+            
+            <div class="hk-letter-content" id="letterContent">
+                <p><strong>Minha querida Larissa de Oliveira Santos,</strong></p>
+                <p>Sabe aquela doçura inconfundível e aquele laço vermelho da Hello Kitty que você tanto ama? Eles me lembram muito o seu jeito: único, delicado e capaz de trazer cor, fofura e alegria para os meus dias. Vendo a chegada dos seus 20 anos, meu coração transborda de gratidão por ter essa mulher incrível na minha vida.</p>
+                
+                <p>Desde aquele inesquecível dia 2 de setembro, o meu mundo ganhou um brilho diferente. Eu sei que a distância não é uma jornada fácil. Tem dias em que a saudade bate muito forte e a vontade de te abraçar é imensa. Mas eu quero que você nunca se esqueça de uma coisa: <strong>por você, eu faço absolutamente tudo.</strong></p>
+                
+                <p>Cada quilômetro que separa Anápolis de onde você está se torna minúsculo quando eu lembro da grandeza do que estamos construindo. O nosso amor é o que me move, e nenhuma distância será capaz de apagar ou diminuir a nossa conexão. Nós vamos superar cada desafio, juntos.</p>
+                
+                <p>Você é o amor da minha vida, Larissa. Estarei sempre aqui para apoiar os seus sonhos, celebrar as suas conquistas e segurar a sua mão quando os dias forem difíceis. Que o seu novo ciclo seja tão lindo, iluminado e especial quanto você é para mim.</p>
+                
+                <p style="text-align: right; color: #ff5277; margin-top: 20px;">
+                    <strong>Com toda a paixão do mundo,<br>Seu eterno namorado, João Vithor. ❤️</strong>
+                </p>
+            </div>
         </div>
 
         <button class="btn-action" onclick="enviarBeijo()">💌 Enviar Beijo Virtual</button>
@@ -273,7 +337,6 @@
         </div>
     </div>
 
-    <!-- Botão flutuante para controlar a música -->
     <button class="music-btn" id="musicToggle" onclick="toggleMusic()">
         🎵 Tocar Música
     </button>
@@ -295,7 +358,31 @@
             isPlaying = !isPlaying;
         }
 
-        // Lógica de Contagem Regressiva para o aniversário (22 de Setembro)
+        // Lógica da Carta da Hello Kitty
+        function toggleLetter() {
+            const letter = document.getElementById('letterContent');
+            const btn = document.getElementById('openLetterBtn');
+            
+            if (letter.style.display === 'block') {
+                letter.style.display = 'none';
+                btn.innerHTML = '💌 Abrir Carta Especial';
+            } else {
+                letter.style.display = 'block';
+                btn.innerHTML = '🌸 Fechar Carta';
+                
+                // Se a música não estiver tocando, ela toca ao abrir a carta
+                if (!isPlaying) {
+                    toggleMusic();
+                }
+                
+                // Desce a tela suavemente até a carta
+                setTimeout(() => {
+                    letter.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+
+        // Lógica de Contagem Regressiva
         function atualizarContagem() {
             const hoje = new Date();
             const anoAtual = hoje.getFullYear();
@@ -319,14 +406,8 @@
 
         atualizarContagem();
 
-        // Animação do botão de beijo
         function enviarBeijo() {
             alert("💖 Um beijo gigante, cheio de saudade e amor, foi enviado direto de Anápolis para você! Te amo!");
-            
-            // Opcional: Se a música não estiver tocando quando ela clicar no beijo, começa a tocar
-            if (!isPlaying) {
-                toggleMusic();
-            }
         }
     </script>
 </body>
